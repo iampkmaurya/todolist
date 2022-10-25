@@ -36,11 +36,16 @@ function ToDo(props) {
     }
 
     return (
-        <>
-            <input className="form-control" value={toDo} onInput={(e) => setTodo(e.target.value)}></input>
-            <button className="btn btn-primary" onClick={(e) => addToDo()}>Add</button>
-            <p>{toDo}</p>
-            <table className="table table-dark">
+        <div className="container dark card p-5">
+
+            <div className="card p-3 mb-4 ">
+                <input className="form-control mb-2" value={toDo} onInput={(e) => setTodo(e.target.value)}></input>
+                <button className="btn btn-primary" onClick={(e) => addToDo()}>Add</button>
+                <div className="alert alert-primary mt-3" role="alert">
+                    {toDo}
+                </div>
+            </div>
+            <table className="table table-dark ">
                 <thead>
                     <tr>
                         <th></th>
@@ -57,7 +62,7 @@ function ToDo(props) {
                                 </td>
                                 <td>{item}</td>
                                 <td>
-                                    <button className='btn btn-secondary mr-3' onClick={(e) => editListRow(index)} >Edit</button>
+                                    <button className='btn btn-secondary me-2' onClick={(e) => editListRow(index)} >Edit</button>
                                     <button className='btn btn-danger' onClick={(e) => deleteListRow(index)}>Delete</button>
                                 </td>
                             </tr>
@@ -78,7 +83,7 @@ function ToDo(props) {
                     </tr> */}
                 </tbody>
             </table>
-        </>
+        </div >
 
     )
 
