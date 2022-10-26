@@ -2,13 +2,19 @@ import { useState } from "react";
 
 
 
-function ToDo(props) {
-    const [toDo, setTodo] = useState('');
-    const [toDoList, setToDoList] = useState([]);
+function ToDo() {
+    const [toDo, setTodo] = useState(''); // input value
+    const [toDoList, setToDoList] = useState([]); //list of todo
+    const [editIndex, setEditIndex] = useState(-1);// updating index
 
-    function addToDo() {
+
+    // get varName(){}   
+    // set varName(value){}
+
+    const addToDo = () => {
         setToDoList([...toDoList, toDo]); //Appending toDO to the list
         setTodo(''); // clearning the toDo for the input
+
     }
 
     function deleteListRow(index) {
@@ -25,13 +31,23 @@ function ToDo(props) {
         const item = toDoList[index];
         setTodo(item);
         // Get the value at index
-
+        setEditIndex(index);
         //Set Value to the input field
     }
 
-    function updateListRow(index) {
-        // Get the value at index
+    function inserAndUpdate() {
 
+        // Get the value at index
+        if (editIndex >= 0) {
+            // UPdating the index 
+            toDoList[editIndex] = toDo;
+            setToDoList(toDoList);
+            setEditIndex(-1)
+        } else {
+            // Insert the value
+            addToDo();
+        }
+        setTodo('');
         //Set Value to the input field
     }
 
@@ -40,12 +56,13 @@ function ToDo(props) {
 
             <div className="card p-3 mb-4 ">
                 <input className="form-control mb-2" value={toDo} onInput={(e) => setTodo(e.target.value)}></input>
-                <button className="btn btn-primary" onClick={(e) => addToDo()}>Add</button>
+                <button className="btn btn-primary" onClick={(e) => inserAndUpdate()}>Add</button>
                 <div className="alert alert-primary mt-3" role="alert">
                     {toDo}
                 </div>
             </div>
-            <table className="table table-dark ">
+
+            <table className="table">
                 <thead>
                     <tr>
                         <th></th>
@@ -68,19 +85,6 @@ function ToDo(props) {
                             </tr>
                         )
                     }
-                    {/* <tr>
-                        <td>
-                            <input type='checkbox'></input>
-                        </td>
-                        <td>
-                            List
-                        </td>
-                        <td>
-                            <button className='btn btn-secondary mr-3'>Edit</button>
-                            <button className='btn btn-danger'>Delete</button>
-
-                        </td>
-                    </tr> */}
                 </tbody>
             </table>
         </div >
@@ -88,13 +92,5 @@ function ToDo(props) {
     )
 
 }
-
-// class TaskListModel{
-//     index=1;
-//     task='';
-//     isDone=false;
-
-// }
-
 
 export default ToDo;
