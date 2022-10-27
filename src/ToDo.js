@@ -24,6 +24,9 @@ function ToDo() {
 
         //Update the TODO list
         setToDoList(list);
+        setTodo('');
+        setEditIndex(-1);
+
     }
 
 
@@ -36,7 +39,6 @@ function ToDo() {
     }
 
     function inserAndUpdate() {
-
         // Get the value at index
         if (editIndex >= 0) {
             // UPdating the index 
@@ -53,7 +55,6 @@ function ToDo() {
 
     return (
         <div className="container dark card p-5">
-
             <div className="card p-3 mb-4 ">
                 <input className="form-control mb-2" value={toDo} onInput={(e) => setTodo(e.target.value)}></input>
                 <button className="btn btn-primary" onClick={(e) => inserAndUpdate()}>Add</button>
@@ -61,7 +62,6 @@ function ToDo() {
                     {toDo}
                 </div>
             </div>
-
             <table className="table">
                 <thead>
                     <tr>
