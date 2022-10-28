@@ -12,7 +12,10 @@ function ToDo() {
     // set varName(value){}
 
     const addToDo = () => {
-        setToDoList([...toDoList, toDo]); //Appending toDO to the list
+        toDoList.push({ taskName: toDo, isCompleted: false });
+        setToDoList([...toDoList])
+        //  ...toDoList ==> list all the elements 
+        //setToDoList([...toDoList, { taskName: toDo, isCompleted: false }]); //Appending toDO to the list
         setTodo(''); // clearning the toDo for the input
 
     }
@@ -23,16 +26,15 @@ function ToDo() {
         list = list.filter((x, i) => i !== index);
 
         //Update the TODO list
-        setToDoList(list);
+        setToDoList([...list]);
         setTodo('');
         setEditIndex(-1);
-
     }
 
 
     function editListRow(index) {
         const item = toDoList[index];
-        setTodo(item);
+        setTodo(item.taskName);
         // Get the value at index
         setEditIndex(index);
         //Set Value to the input field
@@ -41,9 +43,11 @@ function ToDo() {
     function inserAndUpdate() {
         // Get the value at index
         if (editIndex >= 0) {
-            // UPdating the index 
-            toDoList[editIndex] = toDo;
-            setToDoList(toDoList);
+            // UPdating the index
+            let temp = toDoList[editIndex];
+            temp.taskName = toDo;
+            toDoList[editIndex] = temp;
+            setToDoList([...toDoList]);
             setEditIndex(-1)
         } else {
             // Insert the value
@@ -51,6 +55,18 @@ function ToDo() {
         }
         setTodo('');
         //Set Value to the input field
+    }
+
+    function isComplete(index) {
+        //Get the element at index
+        let obj = toDoList[index];
+        obj.isCompleted = !obj.isCompleted;
+        toDoList[index] = obj;
+        setToDoList([...toDoList]);
+
+        //Update the isComplete true or false
+
+
     }
 
     return (
@@ -73,13 +89,14 @@ function ToDo() {
                 <tbody>
                     {
                         toDoList.map((item, index) =>
-                            <tr key={item + index}>
+                            <tr key={item.taskName + index}>
                                 <td>
-                                    <input type='checkbox'></input>
+                                    <input type='checkbox' checked={item.isCompleted} onClick={(e) => isComplete(index)}></input>
                                 </td>
-                                <td>{item}</td>
+                                {item.isCompleted && <td><strike>{item.taskName}</strike></td>}
+                                {!item.isCompleted && <td>{item.taskName}</td>}
                                 <td>
-                                    <button className='btn btn-secondary me-2' onClick={(e) => editListRow(index)} >Edit</button>
+                                    <button className='btn btn-secondary me-2' disabled={item.isCompleted} onClick={(e) => editListRow(index)} >Edit</button>
                                     <button className='btn btn-danger' onClick={(e) => deleteListRow(index)}>Delete</button>
                                 </td>
                             </tr>
