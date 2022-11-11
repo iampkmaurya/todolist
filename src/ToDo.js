@@ -1,12 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 
 function ToDo() {
     const [toDo, setTodo] = useState(''); // input value
     const [toDoList, setToDoList] = useState([]); //list of todo
+    const [toDoListFiltered, setToDoListFiltered] = useState([]); //list of todo
     const [editIndex, setEditIndex] = useState(-1);// updating index
+    const [status, setStatus] = useState(1);
 
+
+
+
+    // Use effect is used to call the function when some action performed
+    useEffect(
+        () => {
+            if (status === 1) {
+                setToDoListFiltered([...toDoList]);
+                return;
+            }
+            if (status === 2) {
+                setToDoListFiltered([...toDoList.filter(x => !x.isCompleted)]);
+            }
+            if (status === 3) {
+                setToDoListFiltered([...toDoList.filter(x => x.isCompleted)]);
+            }
+        },
+        [status, toDoList]
+    )
+    useEffect(
+        () => {
+            setToDoListFiltered([...toDoList]);
+        },
+        [toDoList]
+    )
 
     // get varName(){}   
     // set varName(value){}
@@ -17,13 +44,13 @@ function ToDo() {
         //  ...toDoList ==> list all the elements 
         //setToDoList([...toDoList, { taskName: toDo, isCompleted: false }]); //Appending toDO to the list
         setTodo(''); // clearning the toDo for the input
-
+        setStatus(1);
     }
 
-    function deleteListRow(index) {
+    function deleteListRow(item) {
         // Remove item at index
         let list = toDoList;
-        list = list.filter((x, i) => i !== index);
+        list = list.filter((x) => x !== item);
 
         //Update the TODO list
         setToDoList([...list]);
@@ -63,10 +90,7 @@ function ToDo() {
         obj.isCompleted = !obj.isCompleted;
         toDoList[index] = obj;
         setToDoList([...toDoList]);
-
         //Update the isComplete true or false
-
-
     }
 
     return (
@@ -78,6 +102,12 @@ function ToDo() {
                     {toDo}
                 </div>
             </div>
+            <div className="filter-buttons mb-5 bg-light p-2">
+                <button className="btn btn-primary me-3" onClick={(e) => setStatus(1)}>All</button>
+                <button className="btn btn-primary me-3" onClick={(e) => setStatus(2)}>Pending</button>
+                <button className="btn btn-primary me-3" onClick={(e) => setStatus(3)}>Completed</button>
+                <button className="btn btn-danger">Clear All</button>
+            </div>
             <table className="table">
                 <thead>
                     <tr>
@@ -88,16 +118,16 @@ function ToDo() {
                 </thead>
                 <tbody>
                     {
-                        toDoList.map((item, index) =>
+                        toDoListFiltered.map((item, index) =>
                             <tr key={item.taskName + index}>
                                 <td>
-                                    <input type='checkbox' checked={item.isCompleted} onClick={(e) => isComplete(index)}></input>
+                                    <input type='checkbox' checked={item.isCompleted} onChange={(e) => isComplete(index)}></input>
                                 </td>
                                 {item.isCompleted && <td><strike>{item.taskName}</strike></td>}
                                 {!item.isCompleted && <td>{item.taskName}</td>}
                                 <td>
                                     <button className='btn btn-secondary me-2' disabled={item.isCompleted} onClick={(e) => editListRow(index)} >Edit</button>
-                                    <button className='btn btn-danger' onClick={(e) => deleteListRow(index)}>Delete</button>
+                                    <button className='btn btn-danger' onClick={(e) => deleteListRow(item)}>Delete</button>
                                 </td>
                             </tr>
                         )

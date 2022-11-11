@@ -1,0 +1,27 @@
+Creating Object with property(Task Name, is Completed).  
+While creating by default task name will be from input. -- > is Completed: false,
+    // Object
+    [{
+        taskName: 'Task none',
+        isCompleted: false,
+    },
+    {
+        taskName: 'Task none',
+        isCompleted: false,
+    },]
+
+    ['Task none', 'task2', 'task3'] // Array storage 
+
+
+
+
+    // Arrow Functions Explanation
+    Function  funcName(paramers){
+        logics
+    }
+
+    functionName = (paramers)=>{
+        //logics
+    }
+
+    functiontwo(acb, def, functionName)

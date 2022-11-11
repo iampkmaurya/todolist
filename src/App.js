@@ -3,6 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Wrapper from './Wrapper';
 import ToDo from './ToDo';
+import Parent from './Components/Parent';
 
 
 function App() {
@@ -12,6 +13,8 @@ function App() {
       {/* <Header /> */}
       {/* <Footer /> */}
       <ToDo />
+      {/* <Parent /> */}
+
     </div>
   );
 }
