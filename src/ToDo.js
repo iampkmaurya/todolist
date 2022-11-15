@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import TableInput from "./Components/TableInput";
+import TableList from "./Components/TableList";
 
 
 
@@ -96,7 +98,8 @@ function ToDo() {
     return (
         <div className="container dark card p-5">
             <div className="card p-3 mb-4 ">
-                <input className="form-control mb-2" value={toDo} onInput={(e) => setTodo(e.target.value)}></input>
+                <TableInput test={setTodo} inputValue={toDo} />
+                {/* <input className="form-control mb-2" value={toDo} onInput={(e) => setTodo(e.target.value)}></input> */}
                 <button className="btn btn-primary" onClick={(e) => inserAndUpdate()}>Add</button>
                 <div className="alert alert-primary mt-3" role="alert">
                     {toDo}
@@ -108,32 +111,7 @@ function ToDo() {
                 <button className="btn btn-primary me-3" onClick={(e) => setStatus(3)}>Completed</button>
                 <button className="btn btn-danger">Clear All</button>
             </div>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>ToDo List</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        toDoListFiltered.map((item, index) =>
-                            <tr key={item.taskName + index}>
-                                <td>
-                                    <input type='checkbox' checked={item.isCompleted} onChange={(e) => isComplete(index)}></input>
-                                </td>
-                                {item.isCompleted && <td><strike>{item.taskName}</strike></td>}
-                                {!item.isCompleted && <td>{item.taskName}</td>}
-                                <td>
-                                    <button className='btn btn-secondary me-2' disabled={item.isCompleted} onClick={(e) => editListRow(index)} >Edit</button>
-                                    <button className='btn btn-danger' onClick={(e) => deleteListRow(item)}>Delete</button>
-                                </td>
-                            </tr>
-                        )
-                    }
-                </tbody>
-            </table>
+            <TableList toDoListFiltered={toDoListFiltered} isComplete={isComplete} editListRow={editListRow} deleteListRow={deleteListRow} />
         </div >
 
     )
