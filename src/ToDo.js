@@ -6,11 +6,38 @@ import TableList from "./Components/TableList";
 
 function ToDo() {
     const [toDo, setTodo] = useState(''); // input value
-    const [toDoList, setToDoList] = useState([]); //list of todo
+    const [toDoList, setToDoList] = useState(() => {
+        const data = localStorage.getItem('list');
+        if (data) {
+            return JSON.parse(data);
+        }
+        return [];
+    }); //list of todo
     const [toDoListFiltered, setToDoListFiltered] = useState([]); //list of todo
     const [editIndex, setEditIndex] = useState(-1);// updating index
     const [status, setStatus] = useState(1);
 
+    useEffect(() => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        // var raw = JSON.stringify({
+        //     "title": "json-server2",
+        //     "author": "typicode"
+        // });
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:3001/todo/", requestOptions)
+            .then(response => response.json())
+            .then(result => setToDoList(result))
+            .catch(error => console.log('error', error));
+
+    }, [])
 
 
 
@@ -33,6 +60,13 @@ function ToDo() {
     useEffect(
         () => {
             setToDoListFiltered([...toDoList]);
+        },
+        [toDoList]
+    )
+
+    useEffect(
+        () => {
+            localStorage.setItem('list', JSON.stringify(toDoList));
         },
         [toDoList]
     )
