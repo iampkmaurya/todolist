@@ -17,7 +17,29 @@ function ToDo() {
     const [editIndex, setEditIndex] = useState(-1);// updating index
     const [status, setStatus] = useState(1);
 
-    useEffect(() => {
+    function postApiTodo() {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "isCompleted": false,
+            "taskName": toDo
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:3001/todo", requestOptions)
+            .then(response => response.text())
+            .then(result => getApiTodo())
+            .catch(error => console.log('error', error));
+    }
+
+    function getApiTodo() {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -36,7 +58,23 @@ function ToDo() {
             .then(response => response.json())
             .then(result => setToDoList(result))
             .catch(error => console.log('error', error));
+    }
 
+
+    function deleteApiTodo(id) {
+        var requestOptions = {
+            method: 'DELETE',
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:3001/todo/" + id, requestOptions)
+            .then(response => response.text())
+            .then(result => getApiTodo())
+            .catch(error => console.log('error', error));
+    }
+
+    useEffect(() => {
+        getApiTodo();
     }, [])
 
 
@@ -75,8 +113,9 @@ function ToDo() {
     // set varName(value){}
 
     const addToDo = () => {
-        toDoList.push({ taskName: toDo, isCompleted: false });
-        setToDoList([...toDoList])
+        // toDoList.push({ taskName: toDo, isCompleted: false });
+        // setToDoList([...toDoList])
+        postApiTodo()
         //  ...toDoList ==> list all the elements 
         //setToDoList([...toDoList, { taskName: toDo, isCompleted: false }]); //Appending toDO to the list
         setTodo(''); // clearning the toDo for the input
@@ -85,11 +124,12 @@ function ToDo() {
 
     function deleteListRow(item) {
         // Remove item at index
-        let list = toDoList;
-        list = list.filter((x) => x !== item);
+        // let list = toDoList;
+        // list = list.filter((x) => x !== item);
+        deleteApiTodo(item.id)
 
         //Update the TODO list
-        setToDoList([...list]);
+        // setToDoList([...list]);
         setTodo('');
         setEditIndex(-1);
     }

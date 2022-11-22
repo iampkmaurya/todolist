@@ -9,30 +9,30 @@
       "title": "json-server2",
       "author": "typicode",
       "id": 2
+    },
+    {
+      "title": "json-server-edited3",
+      "author": "typicode",
+      "id": 3
     }
   ],
   "users": [
     {
-        "id" : 1,
-        "name": "Chandrakant",
-        "address": "Odisa"
+      "id": 1,
+      "name": "Chandrakant",
+      "address": "Odisa"
     },
     {
-        "id" : 2,
-        "name": "Prashant",
-        "address": "Lucknow"
+      "id": 2,
+      "name": "Prashant",
+      "address": "Lucknow"
     }
   ],
   "todo": [
     {
-        "id" : 1,
-        "isCompleted": true,
-        "taskName": "Odisa"
-    },
-    {
-        "id" : 2,
-        "isCompleted": false,
-        "taskName": "Task list 2"
+      "isCompleted": false,
+      "taskName": "Item4",
+      "id": 4
     }
   ]
 }
