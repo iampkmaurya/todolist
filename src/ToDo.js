@@ -5,6 +5,8 @@ import TableList from "./Components/TableList";
 
 
 function ToDo() {
+    // console.log('re rednoring at', new Date())
+
     const [toDo, setTodo] = useState(''); // input value
     const [toDoList, setToDoList] = useState(() => {
         const data = localStorage.getItem('list');
@@ -73,6 +75,30 @@ function ToDo() {
             .catch(error => console.log('error', error));
     }
 
+    function updateApiTodo(id) {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        const item = toDoList.find(x => x.id === id);
+        var raw = JSON.stringify({
+            "isCompleted": item.isCompleted,
+            "taskName": toDo
+        });
+
+        var requestOptions = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:3001/todo/" + id, requestOptions)
+            .then(response => response.text())
+            .then(result => getApiTodo())
+            .catch(error => console.log('error', error));
+
+    }
+
+
     useEffect(() => {
         getApiTodo();
     }, [])
@@ -95,6 +121,7 @@ function ToDo() {
         },
         [status, toDoList]
     )
+
     useEffect(
         () => {
             setToDoListFiltered([...toDoList]);
@@ -136,7 +163,8 @@ function ToDo() {
 
 
     function editListRow(index) {
-        const item = toDoList[index];
+        // const item = toDoList[index];
+        const item = toDoList.find(x => x.id === index);
         setTodo(item.taskName);
         // Get the value at index
         setEditIndex(index);
@@ -147,10 +175,11 @@ function ToDo() {
         // Get the value at index
         if (editIndex >= 0) {
             // UPdating the index
-            let temp = toDoList[editIndex];
-            temp.taskName = toDo;
-            toDoList[editIndex] = temp;
-            setToDoList([...toDoList]);
+            // let temp = toDoList[editIndex];
+            // temp.taskName = toDo;
+            // toDoList[editIndex] = temp;
+            // setToDoList([...toDoList]);
+            updateApiTodo(editIndex)
             setEditIndex(-1)
         } else {
             // Insert the value
@@ -176,7 +205,7 @@ function ToDo() {
                 {/* <input className="form-control mb-2" value={toDo} onInput={(e) => setTodo(e.target.value)}></input> */}
                 <button className="btn btn-primary" onClick={(e) => inserAndUpdate()}>Add</button>
                 <div className="alert alert-primary mt-3" role="alert">
-                    {toDo}
+                    <b>Preview:</b> {toDo}
                 </div>
             </div>
             <div className="filter-buttons mb-5 bg-light p-2">
@@ -185,7 +214,7 @@ function ToDo() {
                 <button className="btn btn-primary me-3" onClick={(e) => setStatus(3)}>Completed</button>
                 <button className="btn btn-danger">Clear All</button>
             </div>
-            <TableList toDoListFiltered={toDoListFiltered} isComplete={isComplete} editListRow={editListRow} deleteListRow={deleteListRow} />
+            <TableList toDoListFiltered={toDoListFiltered} getApiTodo={getApiTodo} isComplete={isComplete} editListRow={editListRow} deleteListRow={deleteListRow} />
         </div >
 
     )
