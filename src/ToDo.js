@@ -8,6 +8,8 @@ function ToDo() {
     // console.log('re rednoring at', new Date())
 
     const [toDo, setTodo] = useState(''); // input value
+
+
     const [toDoList, setToDoList] = useState(() => {
         const data = localStorage.getItem('list');
         if (data) {
@@ -214,7 +216,7 @@ function ToDo() {
                 <button className="btn btn-primary me-3" onClick={(e) => setStatus(3)}>Completed</button>
                 <button className="btn btn-danger">Clear All</button>
             </div>
-            <TableList toDoListFiltered={toDoListFiltered} getApiTodo={getApiTodo} isComplete={isComplete} editListRow={editListRow} deleteListRow={deleteListRow} />
+            <TableList toDoListFiltered={toDoListFiltered} setToDoListFiltered={setToDoListFiltered} getApiTodo={getApiTodo} isComplete={isComplete} editListRow={editListRow} deleteListRow={deleteListRow} />
         </div >
 
     )

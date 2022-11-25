@@ -4,18 +4,30 @@ import Footer from './Footer';
 import Wrapper from './Wrapper';
 import ToDo from './ToDo';
 import Parent from './Components/Parent';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 
 function App() {
   return (
-    <div>
-      <Wrapper />
-      {/* <Header /> */}
-      {/* <Footer /> */}
-      <ToDo />
-      {/* <Parent /> */}
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Header />}>
+          <Route path='/todo' element={<ToDo />} />
+        </Route>
 
-    </div>
+        {/* <Route path='/header' element={<Header />} /> */}
+
+
+      </Routes>
+    </BrowserRouter>
+    // <div>
+    //   <Wrapper />
+    //   {/* <Header /> */}
+    //   {/* <Footer /> */}
+    //   <ToDo />
+    //   {/* <Parent /> */}
+
+    // </div>
   );
 }
 

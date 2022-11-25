@@ -1,8 +1,11 @@
 
+import { useEffect, useRef, useState } from "react";
 import DeleteAction from "./DeleteAction";
 
 
 function TableList(props) {
+    // const [searchTodo, setSearchTodo] = useState(''); // search value
+
 
     function updateTodoStatusApi(item) {
         item.isCompleted = !item.isCompleted;
@@ -23,11 +26,37 @@ function TableList(props) {
             .then(result => props.getApiTodo())
             .catch(error => console.log('error', error));
     }
+    // const didMountRef = useRef(false);
+    // useEffect(() => {
+    //     if (didMountRef.current) {
+    //         searchTodoApi(searchTodo)
+    //     }
+    //     didMountRef.current = true;
+    // }, [searchTodo]
+    // )
+    function searchTodoApi(searchTodo) {
+        // if (!searchTodo.length) {
+        //     return;
+        // }
+        // setSearchTodo(searchTodo);  // used this line because of value is not appearinig in the input
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:3001/todo/?taskName_like=" + searchTodo, requestOptions)
+            .then(response => response.json())
+            .then(result => props.setToDoListFiltered(result))
+            .catch(error => console.log('error', error));
+    }
 
 
 
     return (
         <>
+            <div className="input-group mb-3">
+                <input type="text" className="form-control" placeholder="Search" onChange={(e) => searchTodoApi(e.target.value)} />
+            </div>
             <table className="table">
                 <thead>
                     <tr>
