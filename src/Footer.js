@@ -4,9 +4,6 @@ function Footer() {
         <h1>This is footer</h1>
     </>
     )
-
-
-
 }
 
 export default Footer;

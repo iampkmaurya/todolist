@@ -14,20 +14,9 @@ function App() {
         <Route path='/' element={<Header />}>
           <Route path='/todo' element={<ToDo />} />
         </Route>
-
         {/* <Route path='/header' element={<Header />} /> */}
-
-
       </Routes>
     </BrowserRouter>
-    // <div>
-    //   <Wrapper />
-    //   {/* <Header /> */}
-    //   {/* <Footer /> */}
-    //   <ToDo />
-    //   {/* <Parent /> */}
-
-    // </div>
   );
 }
 

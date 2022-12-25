@@ -30,12 +30,12 @@
   ],
   "todo": [
     {
-      "isCompleted": true,
+      "isCompleted": false,
       "taskName": "Item4",
       "id": 4
     },
     {
-      "isCompleted": true,
+      "isCompleted": false,
       "taskName": "Item5",
       "id": 5
     },
@@ -56,73 +56,8 @@
     },
     {
       "isCompleted": false,
-      "taskName": "Item8",
+      "taskName": "Item10",
       "id": 9
-    },
-    {
-      "isCompleted": false,
-      "taskName": "asdf",
-      "id": 11
-    },
-    {
-      "isCompleted": false,
-      "taskName": "asdasdf",
-      "id": 12
-    },
-    {
-      "isCompleted": false,
-      "taskName": "asdasdf",
-      "id": 13
-    },
-    {
-      "isCompleted": false,
-      "taskName": "asdfasd",
-      "id": 14
-    },
-    {
-      "isCompleted": false,
-      "taskName": "asdfasdf",
-      "id": 15
-    },
-    {
-      "isCompleted": false,
-      "taskName": "asdfasdf",
-      "id": 16
-    },
-    {
-      "isCompleted": false,
-      "taskName": "asdfasdfasdf",
-      "id": 17
-    },
-    {
-      "isCompleted": false,
-      "taskName": "asdfasdf",
-      "id": 18
-    },
-    {
-      "isCompleted": false,
-      "taskName": "asdfasdfa",
-      "id": 19
-    },
-    {
-      "isCompleted": false,
-      "taskName": "asdfasdfasd",
-      "id": 20
-    },
-    {
-      "isCompleted": false,
-      "taskName": "asdfasdf",
-      "id": 21
-    },
-    {
-      "isCompleted": false,
-      "taskName": "asdfasdf",
-      "id": 22
-    },
-    {
-      "isCompleted": false,
-      "taskName": "item8",
-      "id": 23
     }
   ]
 }
